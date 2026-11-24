@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Une simulation narrative sur les violences sexistes et sexuelles en milieu étudiant.">
+<title>DEBUG — Les violences invisibles</title>
+<link rel="stylesheet" href="style.css">
+<script defer src="scenes.js"></script>
+<script defer src="game.js"></script>
+</head>
+<body>
+<a class="jump" href="#screen">Aller au contenu</a>
+<header class="top">
+  <div class="brand"><span class="mark" aria-hidden="true">›_</span> DEBUG<span class="brand-extra"> / SIMULATION NARRATIVE</span></div>
+  <nav aria-label="Commandes de la simulation">
+    <button id="motion" type="button" aria-pressed="false"><span aria-hidden="true">◉</span> Réduire les animations</button>
+    <button id="exit" type="button" hidden>Quitter la simulation</button>
+    <a id="resources-link" href="ressources.html">Ressources</a>
+  </nav>
+</header>
+<div class="layout">
+<aside class="sidebar" aria-label="Progression dans la simulation">
+  <p class="label">PARCOURS</p>
+  <ol id="chapters">
+    <li><span>01</span><div><strong>IDENTIFY</strong><small>Les bugs ordinaires</small></div></li>
+    <li><span>02</span><div><strong>UNDERSTAND</strong><small>L’erreur systémique</small></div></li>
+    <li><span>03</span><div><strong>FIX</strong><small>Le correctif</small></div></li>
+  </ol>
+  <div class="progress">
+    <label for="progress">Progression <span id="count">00 / 12</span></label>
+    <progress id="progress" value="0" max="12"></progress>
+  </div>
+</aside>
+<main id="screen" tabindex="-1">
+  <section class="intro reveal">
+    <div class="intro-art" aria-hidden="true"><i></i><i></i><i></i><b>›_</b></div>
+    <p class="label eyebrow">EXPÉRIENCE INTERACTIVE</p>
+    <h1><span>DEBUG<span class="cursor" aria-hidden="true"></span></span>Les violences<br>invisibles</h1>
+    <p class="slogan">Identifier. Comprendre. Agir.</p>
+    <p class="intro-copy">Tu viens d’intégrer une école informatique. Entre projets et messages sur Discord, certains détails passent d’abord inaperçus. Au fil des semaines, tu décides comment réagir.</p>
+    <div class="warning"><strong><span aria-hidden="true">△</span> Avertissement de contenu</strong><p>Cette fiction aborde le sexisme, le harcèlement sexuel et les cyberviolences. Les personnages sont fictifs et les réactions des personnes concernées varient. Tu peux passer les scènes sensibles ou quitter à tout moment.</p></div>
+    <button class="primary" id="start" type="button">Démarrer la simulation</button>
+  </section>
+</main>
+</div>
+<footer class="footer"><span>DEBUG<span class="muted"> / Les violences invisibles</span></span><span>Simulation fictive · Aucune donnée collectée</span></footer>
+<noscript><p class="noscript">JavaScript doit être activé pour jouer. <a href="ressources.html">Consulter les ressources</a>.</p></noscript>
+</body>
+</html>
