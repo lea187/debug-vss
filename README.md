@@ -10,7 +10,7 @@ Les commandes sont utilisables au clavier. Utilise Tab et Maj + Tab pour te dép
 
 ## Objectif pédagogique
 
-Le jeu s’adresse aux étudiantes et étudiants de l’école 42. Il suit une promo fictive pendant sept semaines et explore le sexisme ordinaire, le consentement, le harcèlement, les cyberviolences et les interventions possibles des témoins. Après chaque décision, le jeu montre une conséquence dans l’histoire et propose un repère. Les scènes passées ne produisent pas de recommandation fondée sur un choix présumé.
+Le jeu s’adresse aux étudiantes et étudiants de l’école 42. En onze scènes, il suit une promo fictive pendant sept semaines, des premiers tests Libft aux interventions des témoins. Le récit explore le sexisme ordinaire, le consentement, le harcèlement, les cyberviolences et les interventions possibles des témoins. Après chaque décision, le jeu montre une conséquence dans l’histoire et propose un repère. Les scènes passées ne produisent pas de recommandation fondée sur un choix présumé.
 
 Le Debug Report s’appuie sur les stratégies exercées et propose des pistes de mise en pratique. Les choix ne donnent lieu à aucun classement.
 

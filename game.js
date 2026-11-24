@@ -112,16 +112,34 @@ function renderScene(revealSensitive = false) {
   }
 
   section.append(element('p', scene.story, 'reveal'));
-  const chat = element('div', '', 'chat reveal');
+  const channel = scene.channel.replace('Discord · ', '');
+  const directMessage = channel.startsWith('Messages privés · ');
+  const conversation = channel.startsWith('#') || directMessage;
+  const chat = element('div', '', conversation ? 'chat conversation reveal' : 'chat reveal');
   const list = element('ol');
   // Certains dialogues consultent les actions retenues dans les scènes précédentes.
   const messages = typeof scene.messages === 'function' ? scene.messages(anchors) : scene.messages;
-  messages.forEach(([author, message]) => {
+  messages.forEach(([author, message, time]) => {
     const item = element('li');
-    item.append(element('strong', author), element('p', message));
+    const content = element('div');
+    const byline = element('div', '', 'message-byline');
+    byline.append(element('strong', author));
+    if (time) byline.append(element('time', time));
+    content.append(byline, element('p', message));
+    if (conversation) {
+      const avatar = element('span', author[0], 'avatar');
+      avatar.dataset.author = author;
+      avatar.setAttribute('aria-hidden', 'true');
+      item.append(avatar);
+    }
+    item.append(content);
     list.append(item);
   });
-  chat.append(element('h2', scene.channel), list);
+  const title = element('h2', directMessage ? channel.replace('Messages privés · ', '@') : channel);
+  if (conversation) {
+    title.append(element('span', directMessage ? 'Message privé' : 'Promo 42', 'channel-context'));
+  }
+  chat.append(title, list);
   section.append(chat);
 
   const decision = element('div');
@@ -183,7 +201,7 @@ function renderReport() {
   const next = interventions.find(([key]) => !anchors.has(key));
   const identification = [
     ['roles', 'les rôles genrés'], ['credit', 'l’attribution du travail'], ['acces', 'l’exclusion par les canaux privés'],
-    ['diffusion', 'la diffusion des messages privés'], ['cumul', 'l’accumulation des effets'], ['impact', 'la distinction entre intention et impact']
+    ['diffusion', 'la diffusion des messages privés'], ['cumul', 'l’accumulation des effets']
   ].filter(([key]) => anchors.has(key)).map(([, label]) => label);
   const topics = [
     ['Identifier les violences', identification.length ? 'Tes choix ont abordé ' + identification.join(', ') + '. En réunion, observe aussi qui doit apporter davantage de preuves pour être entendu.' : 'Observe les faits qui se répètent. Qui obtient les tâches techniques ? Qui doit défendre son diagnostic ? Qui reçoit les invitations ?'],

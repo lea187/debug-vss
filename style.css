@@ -108,3 +108,43 @@ h1, h2, h3 { line-height: 1.2; }
   .report-grid { grid-template-columns: 1fr; }
   .footer { flex-direction: column; align-items: flex-start; gap: .25rem; }
 }
+
+/* Le salon reprend les repères d’une messagerie tout en gardant le thème DEBUG. */
+.conversation { background: #171d1b; border-color: #384943; }
+.conversation h2 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .35rem .8rem;
+  background: #202b26;
+  border-bottom: 1px solid #384943;
+  border-radius: 5px 5px 0 0;
+}
+.channel-context { color: var(--muted); font-size: .8rem; font-weight: 400; }
+.conversation ol { gap: .15rem; padding: .55rem; }
+.conversation li {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr);
+  align-items: start;
+  gap: .65rem;
+  padding: .5rem .4rem;
+  border-radius: 4px;
+}
+.conversation li:hover { background: #212c27; }
+.message-byline { display: flex; flex-wrap: wrap; align-items: baseline; gap: .1rem .65rem; }
+.message-byline time { color: var(--muted); font-size: .8rem; }
+.conversation p { font-family: system-ui, sans-serif; }
+.avatar {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #384641;
+  color: #f2faf6;
+  font-size: .95rem;
+  font-weight: 800;
+}
+.avatar[data-author="Sarah"] { background: #285744; }
+.avatar[data-author="Thomas"] { background: #495375; }
+.avatar[data-author="Lucas"] { background: #5a4532; }
+.avatar[data-author="Maxime"] { background: #593d56; }
