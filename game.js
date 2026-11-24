@@ -168,13 +168,13 @@ function renderScene(revealSensitive = false) {
   show(section);
 }
 
-function showFeedback(decision, scene, [selection, consequence, explanation, anchor]) {
+function showFeedback(decision, scene, [, consequence, explanation, anchor]) {
   if (anchor) anchors.add(anchor);
   updateProgress(index + 1, scene.chapter);
   const feedback = element('div', '', 'feedback reveal');
   const heading = element('h2', 'Ce qui se passe ensuite');
   heading.tabIndex = -1;
-  feedback.append(heading, element('p', 'Ton choix — ' + selection, 'meta'), element('p', consequence));
+  feedback.append(heading, element('p', consequence));
   feedback.append(element('h2', 'Repère pour la suite'), element('p', explanation));
   const actions = element('div', '', 'actions');
   actions.append(button(index + 1 === scenes.length ? 'Voir le Debug Report' : 'Continuer', advance, 'primary'));
@@ -183,13 +183,14 @@ function showFeedback(decision, scene, [selection, consequence, explanation, anc
 }
 
 function renderReport() {
+  document.body.classList.remove('final-screen');
   exitButton.hidden = true;
   updateProgress(scenes.length, -1);
   const section = element('section', '', 'report reveal');
   section.append(
     element('p', 'FIN DU PARCOURS', 'label'),
     element('h1', 'Debug Report'),
-    element('p', 'Des repères tirés de tes décisions pour réfléchir à ce que tu pourrais faire dans une situation réelle.')
+    element('p', 'Quatre repères pour la suite.')
   );
   if (skipped) section.append(element('p', skipped === 1 ? 'Une scène passée. Elle ne compte pas dans tes repères.' : skipped + ' scènes passées. Elles ne comptent pas dans tes repères.', 'meta'));
 
@@ -200,14 +201,14 @@ function renderReport() {
   const used = interventions.filter(([key]) => anchors.has(key)).map(([, label]) => label);
   const next = interventions.find(([key]) => !anchors.has(key));
   const identification = [
-    ['roles', 'les rôles genrés'], ['credit', 'l’attribution du travail'], ['acces', 'l’exclusion par les canaux privés'],
+    ['roles', 'les rôles genrés'], ['credit', 'l’attribution du travail'],
     ['diffusion', 'la diffusion des messages privés'], ['cumul', 'l’accumulation des effets']
   ].filter(([key]) => anchors.has(key)).map(([, label]) => label);
   const topics = [
-    ['Identifier les violences', identification.length ? 'Tes choix ont abordé ' + identification.join(', ') + '. En réunion, observe aussi qui doit apporter davantage de preuves pour être entendu.' : 'Observe les faits qui se répètent. Qui obtient les tâches techniques ? Qui doit défendre son diagnostic ? Qui reçoit les invitations ?'],
-    ['Comprendre le consentement', anchors.has('silence') ? 'Tu as proposé de s’arrêter face à l’immobilité. En pratique, laisse à l’autre la possibilité de refuser ou de changer d’avis sans pression.' : anchors.has('limite') ? 'Tu as pris en compte une limite exprimée. Quand une personne hésite ou se fige, arrête-toi aussi et laisse-lui le choix de reprendre.' : 'Quand une personne se fige ou hésite, arrête-toi. Cherche un accord libre pour ce moment précis, sans insister.'],
-    ['Intervenir comme témoin', (used.length ? 'Tu as mis en pratique ces stratégies : ' + used.join(', ') + '. ' : '') + 'Pour élargir tes options, entraîne-toi à ' + (next ? next[1] : 'adapter ton intervention aux risques et aux besoins de la personne') + ' quand le contexte le permet.'],
-    ['Connaître les dispositifs d’aide', anchors.has('aide') ? 'Tu as proposé un relais. Repère le contact officiel de ton campus et le rôle de chaque service avant d’en avoir besoin.' : 'Explore les ressources pour distinguer l’écoute, les soins, le signalement interne et les démarches externes.']
+    ['Identifier les violences', identification.length ? 'Tu as repéré ' + identification.join(', ') + '.' : 'Observe à qui on demande le plus de preuves.'],
+    ['Comprendre le consentement', anchors.has('limite') ? 'Tu as pris en compte la limite de Sarah. Un accord peut être retiré.' : 'Une aide ne donne aucun droit à une réponse intime.'],
+    ['Intervenir comme témoin', (used.length ? 'Tes stratégies : ' + used.join(', ') + '. ' : '') + 'À essayer : ' + next[1] + '.'],
+    ['Connaître les dispositifs d’aide', (anchors.has('aide') ? 'Tu as proposé un relais. ' : '') + 'À 42 Paris, victime ou témoin : social-report@42paris.fr.']
   ];
   const grid = element('div', '', 'report-grid');
   topics.forEach(([title, copy]) => {
@@ -215,24 +216,37 @@ function renderReport() {
     card.append(element('h2', title), element('p', copy));
     grid.append(card);
   });
-  const ending = element('div', '', 'ending');
+  const actions = element('div', '', 'actions');
+  actions.append(button('Continuer vers la fin', renderEnding, 'primary'), resourcesLink());
+  section.append(grid, actions);
+  show(section);
+}
+
+function renderEnding() {
+  document.body.classList.add('final-screen');
+  const section = element('section', '', 'ending');
+  const heading = element('h1', 'L’intention n’efface pas ', 'reveal');
+  heading.append(element('span', 'l’impact.'));
+  section.append(heading);
+
   [
-    'L’intention n’efface pas l’impact.',
     'Le silence n’interrompt pas la violence.',
     'Le changement commence aussi par les témoins.',
     'Simulation terminée. Dans la réalité, c’est à toi d’agir.'
   ].forEach((line, position) => {
     const paragraph = element('p', line, 'reveal');
-    paragraph.style.setProperty('--delay', position * 500 + 'ms');
-    ending.append(paragraph);
+    paragraph.style.setProperty('--delay', (position + 1) * 550 + 'ms');
+    section.append(paragraph);
   });
+
   const actions = element('div', '', 'actions');
-  actions.append(button('Rejouer', home, 'primary'), resourcesLink());
-  section.append(grid, ending, actions);
+  actions.append(button('Rejouer', home, 'primary'), button('Revoir le bilan', renderReport), resourcesLink());
+  section.append(actions);
   show(section);
 }
 
 function home() {
+  document.body.classList.remove('final-screen');
   resetRun();
   exitButton.hidden = true;
   updateProgress(0, -1);

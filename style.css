@@ -148,3 +148,31 @@ h1, h2, h3 { line-height: 1.2; }
 .avatar[data-author="Thomas"] { background: #495375; }
 .avatar[data-author="Lucas"] { background: #5a4532; }
 .avatar[data-author="Maxime"] { background: #593d56; }
+
+/* La clôture occupe tout l’écran de jeu, y compris l’espace du parcours. */
+.final-screen .layout { display: block; width: 100%; margin: 0; }
+.final-screen .sidebar { display: none; }
+.final-screen main { border: 0; border-radius: 0; }
+.ending {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 78svh;
+  margin: 0;
+  padding: clamp(1.5rem, 7vw, 7rem);
+  background: radial-gradient(ellipse at 85% 20%, #1a3a2b, transparent 55%), #0a100d;
+  color: var(--text);
+}
+.ending h1 {
+  max-width: 14ch;
+  margin: 0 0 .4em;
+  font-size: clamp(2.4rem, 8vw, 8rem);
+  letter-spacing: -.07em;
+  line-height: .98;
+}
+.ending h1 span { color: var(--green); display: block; }
+.ending p { margin: .35rem 0; }
+.ending p:last-of-type { color: var(--muted); font-weight: 400; margin-top: 1.4rem; }
+.campus-contact { border: 1px solid #44745f; border-left: 4px solid var(--green); background: #15251d; border-radius: 6px; padding: clamp(1rem, 3vw, 1.6rem); margin: 1.5rem 0; }
+.campus-contact h2 { margin-top: 0; }
+.campus-email { display: inline-block; padding: .5rem 0; font-size: clamp(1rem, 4vw, 1.35rem); font-weight: 800; }
